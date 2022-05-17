@@ -2,7 +2,6 @@ package com.webcustomer_tracker.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -20,7 +19,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 											// bean id="sessionFactory"
 
 	@Override
-	@Transactional
 	public List<Customer> getCustomers() {
 
 		// get the current hibernate session
