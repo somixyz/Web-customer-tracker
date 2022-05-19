@@ -22,12 +22,12 @@
 
 	<div id="container">
 	
-		<div id="container">
+		<div id="content">
 			<!-- 			 put new button: ADd customer -->
 			
-			<input type="button" value="Add customer"
-					onclick="window.location.href='showFormForAdd'; return false;"
-					class="add-button"
+			<input type="button" value="Add Customer"
+				   onclick="window.location.href='showFormForAdd'; return false;"
+				   class="add-button"
 			/>
 			
 			
