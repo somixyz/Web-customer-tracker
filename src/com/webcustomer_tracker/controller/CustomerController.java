@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.webcustomer_tracker.entity.Customer;
 import com.webcustomer_tracker.service.CustomerService;
@@ -32,28 +33,37 @@ public class CustomerController {
 
 		return "list-customers";
 	}
-	
+
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model model) {
-		
-		//create model attribute to bind form data
+
+		// create model attribute to bind form data
 		Customer customer = new Customer();
-		model.addAttribute(	"customer",customer);
+		model.addAttribute("customer", customer);
 		return "customer-form";
 	}
-	
+
 	@PostMapping("/saveCustomer")
-	public String saveCustomer(@ModelAttribute("customer")Customer customer) {
-		
-		//save the customer using our service
+	public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+
+		// save the customer using our service
 		customerService.saveCustomer(customer);
 		return "redirect:/customer/list";
 	}
+
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("customerId") int id, Model model) {
+
+		// get the customer from service
+		Customer customer = customerService.getCustomer(id);
+
+		// set customer as a model attribute to pre-populate the form
+		model.addAttribute("customer", customer);
+
+		// send over to out form
+		return "customer-form";
+	}
 	
 	
-	
-	
-	
-	
-	
+
 }
