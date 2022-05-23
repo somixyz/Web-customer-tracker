@@ -5,7 +5,7 @@ import com.webcustomer_tracker.entity.Customer;
 
 public interface CustomerDAO {
 
-	public List<Customer> getCustomers();
+//	public List<Customer> getCustomers();
 
 	public void save(Customer customer);
 
@@ -14,5 +14,7 @@ public interface CustomerDAO {
 	public void deleteCustomer(int id);
 
 	public List<Customer> searchCustomers(String theSearchName);
+
+	public List<Customer> getCustomers(int theSortField);
 
 }

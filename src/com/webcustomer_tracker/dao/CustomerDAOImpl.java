@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.webcustomer_tracker.entity.Customer;
+import com.webcustomer_tracker.util.SortUtils;
 
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
@@ -18,32 +19,56 @@ public class CustomerDAOImpl implements CustomerDAO {
 	private SessionFactory sessionFactory; // sessionFactory koji je mapiran u spring-mvc-crud-demo-servlet.xml fajlu
 											// bean id="sessionFactory"
 
+	/*
+	 * @Override public List<Customer> getCustomers() {
+	 * 
+	 * // get the current hibernate session Session currentSession =
+	 * sessionFactory.getCurrentSession();
+	 * 
+	 * // create a query... sort by last name Query<Customer> theQuery =
+	 * currentSession.createQuery("from Customer order by lastName ",
+	 * Customer.class); // pay attention on lastName property, it is object Customer
+	 * property defined, not db column
+	 * 
+	 * // execute query and get result List<Customer> customers =
+	 * theQuery.getResultList();
+	 * 
+	 * // return the results return customers; }
+	 */
+	
 	@Override
-	public List<Customer> getCustomers() {
-
+	public List<Customer> getCustomers(int theSortField) {
+		
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-
-		// create a query... sort by last name
-		Query<Customer> theQuery = currentSession.createQuery("from Customer order by lastName ", Customer.class); // pay
-																													// attention
-																													// on
-																													// lastName
-																													// property,
-																													// it
-																													// is
-																													// object
-																													// Customer
-																													// property
-																													// defined,
-																													// not
-																													// db
-																													// column
-
-		// execute query and get result
+				
+		// determine sort field
+		String theFieldName = null;
+		
+		switch (theSortField) {
+			case SortUtils.FIRST_NAME: 
+				theFieldName = "firstName";
+				break;
+			case SortUtils.LAST_NAME:
+				theFieldName = "lastName";
+				break;
+			case SortUtils.EMAIL:
+				theFieldName = "email";
+				break;
+			default:
+				// if nothing matches the default to sort by lastName
+				theFieldName = "lastName";
+		}
+		
+		// create a query  
+		String queryString = "from Customer order by " + theFieldName;
+		Query<Customer> theQuery = 
+				currentSession.createQuery(queryString, Customer.class);
+		
+		// execute query and get result list
 		List<Customer> customers = theQuery.getResultList();
-
-		// return the results
+				
+		// return the results		
 		return customers;
 	}
 

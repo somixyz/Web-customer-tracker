@@ -17,12 +17,19 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerDAO customerDAO;
 
+	/* OLD METHOD TAKE A LOOK IN CONTROLLER DESCRIPTION 
+	 * @Override
+	 * 
+	 * @Transactional public List<Customer> getCustomers() { return
+	 * customerDAO.getCustomers(); }
+	 */
+
 	@Override
 	@Transactional
-	public List<Customer> getCustomers() {
-		return customerDAO.getCustomers();
+	public List<Customer> getCustomers(int theSortField) {
+		return customerDAO.getCustomers(theSortField);
 	}
-
+	
 	@Override
 	@Transactional
 	public void saveCustomer(Customer customer) {
@@ -46,5 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> searchCustomers(String theSearchName) {
 		return customerDAO.searchCustomers(theSearchName);
 	}
+	
+	
 
 }
