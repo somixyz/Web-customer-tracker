@@ -36,27 +36,27 @@ public class CustomerController {
 		return "list-customers";
 	}
 	*/
-	
-	
+
+
 	@GetMapping("/list")
 	public String listCustomers(Model theModel, @RequestParam(required=false) String sort) {
-		
+
 		// get customers from the service
 		List<Customer> theCustomers = null;
-		
+
 		// check for sort field
 		if (sort != null) {
 			int theSortField = Integer.parseInt(sort);
-			theCustomers = customerService.getCustomers(theSortField);			
+			theCustomers = customerService.getCustomers(theSortField);
 		}
 		else {
 			// no sort field provided ... default to sorting by last name
 			theCustomers = customerService.getCustomers(SortUtils.LAST_NAME);
 		}
-		
+
 		// add the customers to the model
 		theModel.addAttribute("customers", theCustomers);
-		
+
 		return "list-customers";
 	}
 
@@ -89,26 +89,26 @@ public class CustomerController {
 		// send over to out form
 		return "customer-form";
 	}
-	
+
 	@GetMapping("/delete")
 	public String deleteCustomer(@RequestParam("customerId") int id) {
-		
+
 		// delete the customer
 		customerService.deleteCustomer(id);
-				
+
 		return "redirect:/customer/list";
 	}
-	
+
 	  @GetMapping("/search")
 	    public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model theModel) {
-		  
+
 	        // search customers from the service
 	        List<Customer> theCustomers = customerService.searchCustomers(theSearchName);
-	                
+
 	        // add the customers to the model
 	        theModel.addAttribute("customers", theCustomers);
-	        return "list-customers";        
+	        return "list-customers";
 	    }
-	
+
 
 }
